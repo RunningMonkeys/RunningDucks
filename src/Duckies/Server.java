@@ -15,7 +15,7 @@ public class Server {
 	private Consumer<Serializable> callback;
 	ArrayList<ClientThread> ct;
 	private int port;
-	boolean clientOne,clientTwo, clientThree, clientFour;
+	boolean clientOne, clientTwo, clientThree, clientFour;
 	String dataOne, dataTwo, dataThree, dataFour;
 	ClientThread playerOne, playerTwo, playerThree, playerFour;
 	boolean activeGame;
@@ -25,6 +25,16 @@ public class Server {
 		connthread.setDaemon(true);
 		ct = new ArrayList<ClientThread>();
 		this.port = port;
+	}
+	
+	public void startConn() throws Exception{
+		connthread.start();
+	}
+
+
+
+	public void closeConn() throws Exception{
+		connthread.socket.close();
 	}
 
 	
@@ -82,15 +92,28 @@ public class Server {
 			{
 				server = new ServerSocket(getPort());
 				//added when trying out observer
-				while(true)
+				while(number <= 4)
 				{
 					ClientThread t1 = new ClientThread(server.accept(),number, true);
 					ct.add(t1);
 					t1.start();
-					
-					if(number >= 4)
+					switch(number)
 					{
+					case 1:
+						playerOne = t1;
+						break;
+					case 2:
+						playerTwo = t1;
+						break;
+					case 3:
+						playerThree = t1;
+						break;
+					case 4:
+						playerFour = t1;
 						activeGame = true;
+						break;
+					default:
+						break;
 					}
 					number++;
 				}
@@ -121,6 +144,11 @@ public class Server {
 
 		}
 		
+		private boolean checkInput(String in)
+		{
+			return in.equals("up")|| in.equals("left")|| in.equals("right")|| in.equals("down");	
+		}
+		
 		public int getNumber()
 		{
 			return number;
@@ -140,7 +168,30 @@ public class Server {
 					//Got something in from client do something with it.
 					if(activeGame)
 					{
-						//update info
+						String input = data.toString();
+						if(checkInput(in))
+						{
+							
+							switch(number)
+							{
+							case 1:
+								clientOne = true;
+							case 2:
+								dataTwo = data.toString();
+								clientTwo = true;
+								break;
+							case 3:
+								dataThree = data.toString();
+								clientFour = true;
+								break;
+							case 4:
+								dataFour = data.toString();
+								clientFour = true;
+								break;
+							default:
+								break;
+							}
+						}
 					}
 				
 				}
