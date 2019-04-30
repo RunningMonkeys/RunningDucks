@@ -175,7 +175,9 @@ public class Server {
 							switch(number)
 							{
 							case 1:
+								dataOne = data.toString();
 								clientOne = true;
+								break;
 							case 2:
 								dataTwo = data.toString();
 								clientTwo = true;
