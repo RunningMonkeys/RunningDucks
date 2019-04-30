@@ -8,6 +8,10 @@ bool exitMode = false;
 bool outOfBounds = false; 
 bool isWall = false; 
 
+//NOTE: I DID THE ROUGH DRAFT/BASIC LOGIC IN C++ BECAUSE IT IS THE LANGUAGE THAT I'M THE MOST COMFORTABLE WITH. HOWEVER, I SHALL CONVERT 
+// THIS TO JAVA SOON. I did not want my thinking to be bogged down by a language that I was not as familiar with, especially when the
+// project is in an early stage of development.
+
 class Duck {
     private:
       
