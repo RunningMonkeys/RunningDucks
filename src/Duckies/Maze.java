@@ -18,6 +18,18 @@ public class Maze {
     	duckInitY = 0;
     }
     
+    public void printMaze()
+    {
+    	for(int i = 0; i< level.length; i++)
+    	{
+    		for(int j = 0; j < level[i].length; j++)
+    		{
+    			System.out.print(level[i][j]);
+    		}
+    		System.out.println();
+    	}
+    }
+    
     public boolean[][] getPlayerMaze(int player)
     {
     	int p = getPlayerPrime(player);
@@ -62,6 +74,7 @@ public class Maze {
     		{
     			level[duckY][duckX] = 0;
     			level[duckY -1][duckX] = 5*7;
+    			System.out.println("win");
     			duckY = duckY -1;
     			return true;
     		}
@@ -70,10 +83,12 @@ public class Maze {
     			level[duckY][duckX] = 0;
     			level[duckY -1][duckX] = 7;
     			duckY = duckY -1;
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		else if(level[duckY-1][duckX] % 2 == 0)
     		{
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		else if(level[duckY-1][duckX]%3 == 0)
@@ -82,6 +97,7 @@ public class Maze {
     			level[duckInitY][duckInitX] = 7;
     			duckX = duckInitX;
     			duckY = duckInitY;
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		break;
@@ -95,6 +111,7 @@ public class Maze {
     			level[duckY][duckX] = 0;
     			level[duckY +1][duckX] = 5*7;
     			duckY = duckY +1;
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return true;
     		}
     		else if(level[duckY +1][duckX] == 0)
@@ -102,10 +119,12 @@ public class Maze {
     			level[duckY][duckX] = 0;
     			level[duckY +1][duckX] = 7;
     			duckY = duckY +1;
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		else if(level[duckY+1][duckX] % 2 == 0)
     		{
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		else if(level[duckY+1][duckX]%3 == 0)
@@ -114,11 +133,12 @@ public class Maze {
     			level[duckInitY][duckInitX] = 7;
     			duckX = duckInitX;
     			duckY = duckInitY;
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		break;
     	case "left":
-    		if(duckX - 1 < 0)
+    		if(duckX - 1 < 0 || duckY <0)
     		{
     			return false;
     		}
@@ -129,7 +149,7 @@ public class Maze {
     			duckX = duckX -1;
     			return true;
     		}
-    		else if(level[duckY - 1][duckX] == 0)
+    		else if(level[duckY][duckX-1] == 0)
     		{
     			level[duckY][duckX] = 0;
     			level[duckY][duckX-1] = 7;
@@ -152,6 +172,7 @@ public class Maze {
     	case "right":
     		if(duckX +1 >= level.length)
     		{
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		else if(level[duckY][duckX+1] == 5)
@@ -159,6 +180,7 @@ public class Maze {
     			level[duckY][duckX] = 0;
     			level[duckY][duckX+1] = 5*7;
     			duckX = duckX +1;
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return true;
     		}
     		else if(level[duckY][duckX+1] == 0)
@@ -166,10 +188,12 @@ public class Maze {
     			level[duckY][duckX] = 0;
     			level[duckY][duckX+1] = 7;
     			duckX = duckX +1;
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		else if(level[duckY][duckX+1] % 2 == 0)
     		{
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		else if(level[duckY][duckX+1]%3 == 0)
@@ -178,6 +202,7 @@ public class Maze {
     			level[duckInitY][duckInitX] = 7;
     			duckX = duckInitX;
     			duckY = duckInitY;
+    			System.out.println("Duck at Y = " +duckY+" X = "+ duckX);
     			return false;
     		}
     		break;

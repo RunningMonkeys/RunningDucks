@@ -179,11 +179,13 @@ public class Server {
 								clientFour = true;
 								if(maze.moveDuck(dataFour))
 								{
+									maze.printMaze();
 									send("YOU WIN");
 								}
 								else
 								{
-									playerFour.tout.writeObject(maze);
+									maze.printMaze();
+									playerFour.tout.writeObject("Maze Here:");
 									send("Keep Going");
 								}
 							}
@@ -205,9 +207,6 @@ public class Server {
 				}
 				
 			}
-			
-			
-			
 			
 			catch(Exception e)
 			{
