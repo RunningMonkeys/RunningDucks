@@ -9,22 +9,26 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import NetworkConnection.ClientThread;
+
 
 public class Server {
 	private ConnThread connthread = new ConnThread();
 	private Consumer<Serializable> callback;
 	ArrayList<ClientThread> ct;
 	private int port;
-	boolean clientOne, clientTwo, clientThree, clientFour;
 	String dataOne, dataTwo, dataThree, dataFour;
+	boolean clientFour;
 	ClientThread playerOne, playerTwo, playerThree, playerFour;
 	boolean activeGame;
+	Maze maze;
 	
 	public Server(int port, Consumer<Serializable> callback) {
 		this.callback = callback;
 		connthread.setDaemon(true);
 		ct = new ArrayList<ClientThread>();
 		this.port = port;
+		maze = new Maze();
 	}
 	
 	public void startConn() throws Exception{
@@ -58,23 +62,21 @@ public class Server {
 	
 	public void send(Serializable data) throws Exception{
 		//if both have sent a something call compare and send it back to the client
-		if(isServer())
+		if(activeGame)
 		{
-			String message = data.toString();
+			
 			//write back to the clients who won and set the clients to false
 			for(ClientThread t : ct)
 			{
 				try
 				{
-					t.tout.writeObject(message);
+					t.tout.writeObject(data);
 				}
 				catch(Exception e)
 				{
 					e.printStackTrace();
 				}
 			}
-			clientOne = false;
-			clientTwo = false;
 		}
 	}
 	
@@ -117,6 +119,7 @@ public class Server {
 					}
 					number++;
 				}
+				send(maze);
 
 			}
 			catch(Exception e)
@@ -168,37 +171,45 @@ public class Server {
 					//Got something in from client do something with it.
 					if(activeGame)
 					{
-						String input = data.toString();
-						if(checkInput(in))
+						String input = data.toString().toLowerCase();
+						if(checkInput(input))
 						{
-							
-							switch(number)
+							if(number == 4) 
 							{
-							case 1:
-								dataOne = data.toString();
-								clientOne = true;
-								break;
-							case 2:
-								dataTwo = data.toString();
-								clientTwo = true;
-								break;
-							case 3:
-								dataThree = data.toString();
+								dataFour = input;
 								clientFour = true;
-								break;
-							case 4:
-								dataFour = data.toString();
-								clientFour = true;
-								break;
-							default:
-								break;
+								if(maze.moveDuck(dataFour))
+								{
+									send("YOU WIN");
+								}
+								else
+								{
+									playerFour.tout.writeObject(maze);
+									send("Keep Going");
+								}
+							}
+							else
+							{
+								send(data);
 							}
 						}
+						else
+						{
+							send(data);
+						}
+					}
+					else
+					{
+						
 					}
 				
 				}
 				
 			}
+			
+			
+			
+			
 			catch(Exception e)
 			{
 				callback.accept("Connection Closed with player " + number);
