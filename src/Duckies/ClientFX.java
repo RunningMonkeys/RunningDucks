@@ -5,20 +5,19 @@ package Duckies;
 //import javafx.*;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.lang.reflect.Array;
-import java.util.Random;
 
 public class ClientFX extends Application{
 
@@ -32,13 +31,33 @@ public class ClientFX extends Application{
 	private Button left = new Button("left");
 	private Button right = new Button("right");
 
+	private EventHandler<ActionEvent> vote = new EventHandler<ActionEvent>(){
+		public void handle(ActionEvent event){
+
+			Button b = (Button)event.getSource();
+			String v = b.getText();
+			messages.appendText(v + "\n");
+			try {
+				conn.send(v);
+			}
+			catch(Exception e) {
+
+			}
+
+		}
+	};
+
+
 	private Parent createContent() {
 		messages.setPrefHeight(200);
 		a = showGrid();
 		a.setPrefSize(350,350);
 		TextField input = new TextField();
-		
 
+		up.setOnAction(vote);
+		down.setOnAction(vote);
+		left.setOnAction(vote);
+		right.setOnAction(vote);
 
 		input.setOnAction(event -> {
 			String message = input.getText();
@@ -54,7 +73,8 @@ public class ClientFX extends Application{
 			
 		});
 
-		VBox root = new VBox(20,messages,a,input);
+		HBox buttons = new HBox (10, up, down, left, right);
+		VBox root = new VBox(20,messages,a,input,buttons);
 //		root.getChildren().add(a);
 		root.setPrefSize(600, 600);
 		
