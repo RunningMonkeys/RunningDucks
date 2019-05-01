@@ -11,7 +11,6 @@ public class Maze {
     
     public Maze()
     {
-    	
     	duckX = 1;
     	duckY = 0;
     	duckInitX = 1;
@@ -30,18 +29,27 @@ public class Maze {
     	}
     }
     
-    public boolean[][] getPlayerMaze(int player)
+    public String getPlayerMaze(int player)
     {
     	int p = getPlayerPrime(player);
-    	boolean[][] play = new boolean[level.length][level[0].length];
+    	String out = "" + level.length +", " + level[0].length + ":";
     	for(int i = 0; i< level.length; i++)
     	{
     		for(int j = 0; j < level[i].length; j++)
     		{
-    			play[i][j] = (level[i][j]%p == 0);
+    			if(level[i][j] == p)
+    			{
+    				out = out + "1";
+    			}
+    			else
+    			{
+    				out = out + "0";
+    			}
     		}
     	}
-    	return play;
+    	
+    	return out;
+    	//return play;
     }
     
     private int getPlayerPrime(int player)

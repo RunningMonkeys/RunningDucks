@@ -118,7 +118,10 @@ public class Server {
 					}
 					number++;
 				}
-				send("Maze here:");
+				playerOne.tout.writeObject("Maze Here:" + maze.getPlayerMaze(1));
+				playerTwo.tout.writeObject("Maze Here:" + maze.getPlayerMaze(2));
+				playerThree.tout.writeObject("Maze Here:" + maze.getPlayerMaze(3));
+				playerFour.tout.writeObject("Maze Here:" + maze.getPlayerMaze(4));
 
 			}
 			catch(Exception e)
