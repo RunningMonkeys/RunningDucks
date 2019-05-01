@@ -1,11 +1,9 @@
-package sample;
+package Duckies;
 
 
 
-import java.util.List;
-
-public class Maze implements Serializable {
-    int[][] level;
+public class Maze {
+    int[][] level = {{2,7,2,0,5},{2,0,3,0,3},{2,0,2,0,0},{2,0,2,2,0},{2,0,0,0,0}};
     int duckX;
     int duckY;
     int duckInitX;
@@ -13,7 +11,7 @@ public class Maze implements Serializable {
     
     public Maze()
     {
-    	level = {{2,7,2,0,5},{2,0,3,0,3},{2,0,2,0,0},{2,0,2,2,0},{2,0,0,0,0}};
+    	
     	duckX = 1;
     	duckY = 0;
     	duckInitX = 1;
@@ -40,16 +38,12 @@ public class Maze implements Serializable {
     	{
     	case 1:
     		return 2;
-    		break;
     	case 2:
     		return 3;
-    		break;
     	case 3:
     		return 5;
-    		break;
     	case 4:
     		return 7;
-    		break;
     	default:
     		return 420;
     	}
@@ -190,5 +184,6 @@ public class Maze implements Serializable {
     	default:
     		return false;
     	}
+    	return false;
     }
 }

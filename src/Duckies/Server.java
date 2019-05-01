@@ -9,7 +9,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
-import NetworkConnection.ClientThread;
 
 
 public class Server {
@@ -119,7 +118,7 @@ public class Server {
 					}
 					number++;
 				}
-				send(maze);
+				send("Maze here:");
 
 			}
 			catch(Exception e)
