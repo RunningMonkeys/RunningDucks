@@ -49,9 +49,11 @@ public class ClientFX extends Application{
 
 
 	private Parent createContent() {
-//		clues = strToArr(messages.get);
-		messages.setPrefHeight(200);
-		a = showGrid();
+//		messages.setPrefHeight(200);
+		a = new GridPane();
+		clues = new boolean[1][1];
+		clues[0][0]= false;
+		showGrid(a);
 		a.setPrefSize(350,350);
 		TextField input = new TextField();
 
@@ -113,17 +115,18 @@ public class ClientFX extends Application{
 
 
 	private boolean[][] strToArr(String clue){
+		System.out.println(clue);
 		int comma = clue.indexOf(',');
 		int r = Integer.parseInt(clue.substring(0,comma));
 		int semi = clue.indexOf(':');
-		int c = Integer.parseInt(clue.substring(comma,semi));
+		int c = Integer.parseInt(clue.substring(comma+2,semi));
 
 		clue = clue.substring(semi+1);
 		boolean [][] result = new boolean[r][c];
 
 		for (int i=0; i<r; i++) {
 			for(int j=0; j<c; j++){
-				result [i][j] = clue.charAt(0) == 1? true: false;
+				result [i][j] = clue.charAt(0) == '1'? true: false;
 				clue =  clue.substring(1);
 
 			}
@@ -164,7 +167,18 @@ public class ClientFX extends Application{
 	private Client createClient() {
 		return new Client("127.0.0.1", 5555, data -> {
 			Platform.runLater(()->{
-				messages.appendText(data.toString() + "\n");
+				String strData = data.toString();
+				if(strData.startsWith("Maze Here:"))
+				{
+					strData = strData.substring(strData.indexOf(':')+1);
+					clues = strToArr(strData);
+					showGrid(a);
+				}
+				else
+				{
+					messages.appendText(data.toString() + "\n");
+				}
+				
 			});
 		});
 	}

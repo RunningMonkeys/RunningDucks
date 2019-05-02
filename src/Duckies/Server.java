@@ -188,7 +188,7 @@ public class Server {
 								else
 								{
 									maze.printMaze();
-									playerFour.tout.writeObject("Maze Here:");
+									playerFour.tout.writeObject("Maze Here:" + maze.getPlayerMaze(4));
 									send("Keep Going");
 								}
 							}
