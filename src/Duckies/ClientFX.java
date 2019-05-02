@@ -24,7 +24,7 @@ public class ClientFX extends Application{
 	
 	private Client  conn = createClient();
 	private TextArea messages = new TextArea();
-	private boolean[][] clues = {{true,false,true,false,false},{true,false,false,false,false},{false,false,true,false,false},{true,false,true,true,false},{true,false,false,false,false}};
+	private boolean[][] clues;
 	private GridPane a;
 	private Button up = new Button("up");
 	private Button down = new Button("down");
@@ -49,6 +49,7 @@ public class ClientFX extends Application{
 
 
 	private Parent createContent() {
+//		clues = strToArr(messages.get);
 		messages.setPrefHeight(200);
 		a = showGrid();
 		a.setPrefSize(350,350);
@@ -83,10 +84,9 @@ public class ClientFX extends Application{
 	}
 
 
-	private GridPane showGrid(){
-		GridPane grid = new GridPane();
-		int rowNum = 5;
-		int colNum = 5;
+	private void showGrid(GridPane grid){
+		int rowNum = clues.length;
+		int colNum = clues[0].length;
 
 
 		for (int row = 0; row < rowNum; row++) {
@@ -108,8 +108,31 @@ public class ClientFX extends Application{
 		}
 
 
-		return grid;
+		
 	}
+
+
+	private boolean[][] strToArr(String clue){
+		int comma = clue.indexOf(',');
+		int r = Integer.parseInt(clue.substring(0,comma));
+		int semi = clue.indexOf(':');
+		int c = Integer.parseInt(clue.substring(comma,semi));
+
+		clue = clue.substring(semi+1);
+		boolean [][] result = new boolean[r][c];
+
+		for (int i=0; i<r; i++) {
+			for(int j=0; j<c; j++){
+				result [i][j] = clue.charAt(0) == 1? true: false;
+				clue =  clue.substring(1);
+
+			}
+
+		}
+
+		return result;
+	}
+
 
 
 	public static void main(String[] args) {
