@@ -9,7 +9,12 @@ public class Maze {
     public Maze()
     {
         duck = new Duck();
-
+    }
+    
+    public Maze(int[][] c, int Dx, int Dy)
+    {
+    	level = c;
+    	duck = new Duck(Dx,Dy);
     }
 
     public void printMaze()
@@ -89,15 +94,15 @@ public class Maze {
                     System.out.println("Duck at Y = " +duck.getCurrentY()+" X = "+ duck.getCurrentX());
                     return false;
                 }
-                else if (level[duck.getCurrentY()-1][duck.getCurrentX()] % 2 ==0)// else if(level[duckY-1][duckX] % 2 == 0)
+                else if (level[duck.getCurrentY()-1][duck.getCurrentX()] ==2)// else if(level[duckY-1][duckX] % 2 == 0)
                 {
                     System.out.println("Duck at Y = " +duck.getCurrentY()+" X = "+ duck.getCurrentX());
                     return false;
                 }
-                else if (level[duck.getCurrentY()-1][duck.getCurrentX()]%3 ==0)//else if(level[duckY-1][duckX]%3 == 0)
+                else if (level[duck.getCurrentY()-1][duck.getCurrentX()] ==3 )//else if(level[duckY-1][duckX]%3 == 0)
                 {
                     level[duck.getCurrentY()][duck.getCurrentX()] = 0;
-                    level[duck.getStartingY()][duck.getCurrentX()] = 7;
+                    level[duck.getStartingY()][duck.getStartingX()] = 7;
                     duck.setCurrentX(duck.getStartingX()); //duckX = duckInitX;
                     duck.setCurrentY(duck.getStartingY()); //duckY = duckInitY;
                     System.out.println("Duck at Y = " +duck.getCurrentY()+" X = "+ duck.getCurrentX());
@@ -125,12 +130,12 @@ public class Maze {
                     System.out.println("Duck at Y = " +duck.getCurrentY()+" X = "+ duck.getCurrentX());
                     return false;
                 }
-                else if(level[duck.getCurrentY()+1][duck.getCurrentX()] % 2 == 0)
+                else if(level[duck.getCurrentY()+1][duck.getCurrentX()] == 2 )
                 {
                     System.out.println("Duck at Y = " +duck.getCurrentY()+" X = "+ duck.getCurrentX());
                     return false;
                 }
-                else if(level[duck.getCurrentY()+1][duck.getCurrentX()]%3 == 0)
+                else if(level[duck.getCurrentY()+1][duck.getCurrentX()] ==3)
                 {
                     level[duck.getCurrentY()][duck.getCurrentX()] = 0;
                     level[duck.getStartingY()][duck.getStartingX()] = 7;
@@ -159,11 +164,11 @@ public class Maze {
                     duck.setCurrentX(duck.getCurrentX()-1);//duckX = duckX -1;
                     return false;
                 }
-                else if(level[duck.getCurrentY()][duck.getCurrentX()-1] % 2 == 0)
+                else if(level[duck.getCurrentY()][duck.getCurrentX()-1]  == 2)
                 {
                     return false;
                 }
-                else if(level[duck.getCurrentY()][duck.getCurrentX()-1]%3 == 0)
+                else if(level[duck.getCurrentY()][duck.getCurrentX()-1] == 3)
                 {
                     level[duck.getCurrentY()][duck.getCurrentX()] = 0;
                     level[duck.getStartingY()][duck.getStartingX()] = 7;
@@ -194,12 +199,12 @@ public class Maze {
                     System.out.println("Duck at Y = " +duck.getCurrentY()+" X = "+ duck.getCurrentX());
                     return false;
                 }
-                else if(level[duck.getCurrentY()][duck.getCurrentX()+1] % 2 == 0)
+                else if(level[duck.getCurrentY()][duck.getCurrentX()+1] == 2)
                 {
                     System.out.println("Duck at Y = " +duck.getCurrentY()+" X = "+ duck.getCurrentX());
                     return false;
                 }
-                else if(level[duck.getCurrentY()][duck.getCurrentX()+1]%3 == 0)
+                else if(level[duck.getCurrentY()][duck.getCurrentX()+1] == 3)
                 {
                     level[duck.getCurrentY()][duck.getCurrentX()] = 0;
                     level[duck.getStartingY()][duck.getStartingX()] = 7;
