@@ -12,10 +12,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -30,10 +32,11 @@ public class ClientFX extends Application{
 	private Button down = new Button("down");
 	private Button left = new Button("left");
 	private Button right = new Button("right");
+	int pnum;
 
 	private EventHandler<ActionEvent> vote = new EventHandler<ActionEvent>(){
 		public void handle(ActionEvent event){
-
+			
 			Button b = (Button)event.getSource();
 			String v = b.getText();
 			messages.appendText(v + "\n");
@@ -50,6 +53,7 @@ public class ClientFX extends Application{
 
 	private Parent createContent() {
 //		messages.setPrefHeight(200);
+		pnum = 1;
 		a = new GridPane();
 		clues = new boolean[1][1];
 		clues[0][0]= false;
@@ -89,15 +93,17 @@ public class ClientFX extends Application{
 	private void showGrid(GridPane grid){
 		int rowNum = clues.length;
 		int colNum = clues[0].length;
-
+		System.out.println("Player" + pnum + ".jpg");
+		Image img = new Image("Player" + pnum + ".jpg");
 
 		for (int row = 0; row < rowNum; row++) {
 			for (int col = 0; col < colNum; col++) {
 				Rectangle rec = new Rectangle();
+				
 				rec.setWidth(70);
 				rec.setHeight(70);
 				if(clues[row][col]){
-					rec.setFill(Color.BLACK);
+					rec.setFill(new ImagePattern(img));
 				}
 				else{
 					rec.setFill(Color.WHITE);
@@ -173,6 +179,12 @@ public class ClientFX extends Application{
 					strData = strData.substring(strData.indexOf(':')+1);
 					clues = strToArr(strData);
 					showGrid(a);
+				}
+				else if(strData.startsWith("welcome player "))
+				{
+					strData = strData.substring(strData.indexOf('r')+1);
+					strData = strData.trim();
+					pnum = Integer.parseInt(strData);
 				}
 				else
 				{
